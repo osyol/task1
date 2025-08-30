@@ -1,0 +1,101 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Book {
+    int id;
+    String title;
+    String author;
+}
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Book> library = new ArrayList<>();
+        int idCounter = 1;
+
+        while (true) {
+            System.out.println("\nМеню:");
+            System.out.println("1. Добавить книгу");
+            System.out.println("2. Список всех книг");
+            System.out.println("3. Найти книгу по ID");
+            System.out.println("4. Найти книгу по названию");
+            System.out.println("5. Найти книгу по автору");
+            System.out.println("6. Удалить книгу");
+            System.out.println("7. Выход");
+
+            int choice = sc.nextInt();
+            sc.nextLine(); // очистка буфера
+
+            if (choice == 1) {
+                Book book = new Book();
+                book.id = idCounter;
+                System.out.print("Название: ");
+                book.title = sc.nextLine();
+                System.out.print("Автор: ");
+                book.author = sc.nextLine();
+                library.add(book);
+                System.out.println("Книга добавлена с ID " + idCounter);
+                idCounter++;
+            } else if (choice == 2) {
+                if (library.isEmpty()) {
+                    System.out.println("Библиотека пустая");
+                } else {
+                    for (Book b : library) {
+                        System.out.println("ID: " + b.id + ", " + b.title + " (" + b.author + ")");
+                    }
+                }
+            } else if (choice == 3) {
+                System.out.print("Введите ID: ");
+                int id = sc.nextInt();
+                boolean found = false;
+                for (Book b : library) {
+                    if (b.id == id) {
+                        System.out.println("Найдена: " + b.title + " (" + b.author + ")");
+                        found = true;
+                    }
+                }
+                if (!found) System.out.println("Не найдено");
+            } else if (choice == 4) {
+                System.out.print("Введите название: ");
+                String title = sc.nextLine();
+                boolean found = false;
+                for (Book b : library) {
+                    if (b.title.equalsIgnoreCase(title)) {
+                        System.out.println("Найдена: " + b.title + " (" + b.author + ")");
+                        found = true;
+                    }
+                }
+                if (!found) System.out.println("Не найдено");
+            } else if (choice == 5) {
+                System.out.print("Введите автора: ");
+                String author = sc.nextLine();
+                boolean found = false;
+                for (Book b : library) {
+                    if (b.author.equalsIgnoreCase(author)) {
+                        System.out.println("Найдена: " + b.title + " (" + b.author + ")");
+                        found = true;
+                    }
+                }
+                if (!found) System.out.println("Не найдено");
+            } else if (choice == 6) {
+                System.out.print("Введите ID для удаления: ");
+                int id = sc.nextInt();
+                boolean removed = false;
+                for (int i = 0; i < library.size(); i++) {
+                    if (library.get(i).id == id) {
+                        library.remove(i);
+                        System.out.println("Книга удалена");
+                        removed = true;
+                        break;
+                    }
+                }
+                if (!removed) System.out.println("Не найдено");
+            } else if (choice == 7) {
+                break;
+            } else {
+                System.out.println("Неправильный выбор");
+            }
+        }
+        sc.close();
+    }
+}
